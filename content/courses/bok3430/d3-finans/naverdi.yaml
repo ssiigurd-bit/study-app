@@ -1,0 +1,494 @@
+# Delemne 3 – Pengenes tidsverdi og netto nåverdi
+# Alt innhold er generert og IKKE kontrollert mot pensum (verified: false er standard).
+
+id: naverdi
+title: Nåverdi og tidsverdi
+summary: Fremtidsverdi, nåverdi, annuiteter og netto nåverdi for investeringsprosjekter.
+
+intro:
+  - id: nv-intro-tidsverdi
+    title: Pengenes tidsverdi
+    body: |
+      1 krone i dag er verdt mer enn 1 krone om ett år. Pengene kan settes i banken eller investeres og gi avkastning i mellomtiden.
+
+      Derfor kan vi ikke legge sammen beløp fra ulike år direkte. Vi må først regne dem om til samme tidspunkt.
+
+  - id: nv-intro-fv
+    before: nv-fc-fv
+    title: Fremtidsverdi og renters rente
+    body: |
+      $ FV = K · (1 + r)ⁿ
+
+      Renten i år 2 beregnes også av renten fra år 1. Det kalles **renters rente**.
+
+      Eksempel: 10 000 kr til 5 % i 2 år gir 10 000 · 1,05² = 11 025 kr.
+
+  - id: nv-intro-pv
+    before: nv-fc-pv
+    title: Nåverdi – å diskontere
+    body: |
+      Nåverdi er det motsatte av fremtidsverdi: hva et fremtidig beløp er verdt i dag.
+
+      $ PV = K / (1 + r)ⁿ
+
+      1 / (1 + r)ⁿ kalles **diskonteringsfaktoren**. Eksempel: 10 000 kr om 3 år med 6 % rente er verdt 10 000 / 1,06³ = 8 396 kr i dag.
+    figure:
+      kind: timeline
+      title: 10 000 kr om 3 år
+      flows: [0, 0, 0, 10000]
+      rate: 0.06
+
+  - id: nv-intro-annuitet
+    before: nv-fc-annuitet
+    title: Annuitet – like beløp hvert år
+    body: |
+      Når samme beløp A kommer hvert år i n år (første gang om ett år), kan nåverdien regnes med **annuitetsfaktoren**:
+
+      $ PV = A · (1 − (1 + r)⁻ⁿ) / r
+
+      Det gir samme svar som å diskontere hvert år for seg – bare raskere.
+
+  - id: nv-intro-nnv
+    before: nv-fc-nnv
+    title: Netto nåverdi (NNV)
+    body: |
+      Et investeringsprosjekt har vanligvis en utbetaling nå (år 0) og innbetalinger senere.
+
+      $ NNV = −I₀ + K₁/(1 + r) + K₂/(1 + r)² + … + Kₙ/(1 + r)ⁿ
+
+      Beløp i år 0 diskonteres **ikke** – de er allerede i dagens verdi.
+
+      **NNV > 0:** prosjektet gir mer enn avkastningskravet og er lønnsomt.
+    figure:
+      kind: timeline
+      title: Investering og innbetalinger
+      flows: [-100000, 40000, 40000, 40000]
+      rate: 0.08
+
+  - id: nv-intro-krav
+    before: nv-fc-krav
+    title: Avkastningskravet
+    body: |
+      Renten r i nåverdiberegningen er **avkastningskravet** (også kalt kalkulasjonsrente). Det er avkastningen investorene kunne fått i en annen investering med samme risiko – alternativkostnaden.
+
+      Høyere risiko → høyere avkastningskrav → lavere NNV.
+
+      Kritisk spørsmål: Er kravet riktig satt? Et for lavt krav får dårlige prosjekter til å se lønnsomme ut.
+
+items:
+  - id: nv-fc-tidsverdi
+    type: flashcard
+    front: Pengenes tidsverdi
+    back: En krone i dag er verdt mer enn en krone i fremtiden, fordi den kan investeres og gi avkastning i mellomtiden.
+
+  - id: nv-mcq-tidsverdi
+    type: mcq
+    prompt: Hvorfor er 1 000 kr i dag mer verdt enn 1 000 kr om tre år, selv uten inflasjon?
+    options:
+      - text: Fordi pengene kan investeres og gi avkastning i tre år
+        correct: true
+        feedback: Riktig. Det er kjernen i pengenes tidsverdi.
+      - text: Fordi skatten kan øke
+        feedback: Skatt er ikke grunnen. Pengene kan gi avkastning i mellomtiden.
+      - text: Fordi pengene kan bli borte
+        feedback: Risiko er en ekstra grunn, men selv uten risiko og inflasjon har pengene tidsverdi.
+      - text: Det er de ikke – 1 000 kr er 1 000 kr
+        feedback: 1 000 kr i dag kan settes i banken og bli mer enn 1 000 kr om tre år.
+
+  - id: nv-fc-fv
+    type: flashcard
+    front: Fremtidsverdi
+    back: FV = K · (1 + r)ⁿ
+
+  - id: nv-num-fv
+    type: numeric
+    skillLevel: 1
+    vars:
+      K: { min: 5000, max: 100000, step: 5000 }
+      R: { min: 2, max: 9, step: 1 }
+      N: { min: 2, max: 10, step: 1 }
+    derived:
+      r: R / 100
+      FV: K * (1 + r) ^ N
+    prompt: Du setter {{K}} kr i banken til {{R}} % rente per år. Hvor mye har du etter {{N}} år?
+    answer: { expr: FV, unit: kr }
+    steps:
+      - "FV = K · (1 + r)ⁿ = {{K}} · {{1 + r:2}}^{{N}}"
+      - "= {{K}} · {{(1 + r) ^ N:4}} = {{FV:0}} kr"
+    misconceptions:
+      - expr: K * (1 + r * N)
+        feedback: >-
+          Du har regnet med enkel rente. Med renters rente gir også rentene rente, så du må
+          bruke (1 + r)ⁿ.
+      - expr: K / (1 + r) ^ N
+        feedback: Du har diskontert (regnet nåverdi). Her skal du regne fremover og gange med (1 + r)ⁿ.
+
+  - id: nv-fc-renters-rente
+    type: flashcard
+    front: Renters rente
+    back: Rente på tidligere opptjent rente. Gjør at beløpet vokser stadig raskere – K · (1 + r)ⁿ.
+
+  - id: nv-tf-hoyere-rente
+    type: truefalse
+    statement: Med høyere rente blir fremtidsverdien av et beløp høyere.
+    answer: true
+    explanation: (1 + r)ⁿ øker når r øker.
+
+  - id: nv-fc-pv
+    type: flashcard
+    front: Nåverdi av ett beløp
+    back: PV = K / (1 + r)ⁿ
+
+  - id: nv-fc-df
+    type: flashcard
+    front: Diskonteringsfaktor
+    back: 1 / (1 + r)ⁿ – tallet et beløp om n år ganges med for å finne nåverdien.
+
+  - id: nv-num-pv
+    type: numeric
+    skillLevel: 1
+    vars:
+      K: { min: 50000, max: 500000, step: 10000 }
+      R: { min: 4, max: 12, step: 1 }
+      N: { min: 2, max: 8, step: 1 }
+    derived:
+      r: R / 100
+      PV: K / (1 + r) ^ N
+    prompt: >-
+      Solkraft AS forventer å få utbetalt {{K}} kr om {{N}} år. Avkastningskravet er {{R}} %.
+      Hva er nåverdien av beløpet?
+    answer: { expr: PV, unit: kr }
+    steps:
+      - "PV = K / (1 + r)ⁿ = {{K}} / {{1 + r:2}}^{{N}}"
+      - "= {{K}} / {{(1 + r) ^ N:4}} = {{PV:0}} kr"
+    misconceptions:
+      - expr: K * (1 + r) ^ N
+        feedback: Du har regnet fremtidsverdi. For nåverdi deler du på (1 + r)ⁿ.
+      - expr: K / (1 + r * N)
+        feedback: Du har brukt enkel rente. Diskonter med (1 + r)ⁿ.
+      - expr: K * (1 - r) ^ N
+        feedback: Å trekke fra r hvert år er ikke det samme som å diskontere. Del på (1 + r)ⁿ.
+
+  - id: nv-num-df
+    type: numeric
+    skillLevel: 1
+    vars:
+      R: { min: 3, max: 15, step: 1 }
+      N: { min: 1, max: 10, step: 1 }
+    derived:
+      r: R / 100
+      DF: 1 / (1 + r) ^ N
+    prompt: Hva er diskonteringsfaktoren for år {{N}} med {{R}} % rente? Oppgi svaret med fire desimaler.
+    answer: { expr: DF, decimals: 4 }
+    tolerance: { abs: 0.0001, rel: 0 }
+    steps:
+      - "Diskonteringsfaktor = 1 / (1 + r)ⁿ = 1 / {{1 + r:2}}^{{N}}"
+      - "= 1 / {{(1 + r) ^ N:4}} = {{DF:4}}"
+    misconceptions:
+      - expr: (1 + r) ^ N
+        feedback: Det er fremtidsverdifaktoren. Diskonteringsfaktoren er 1 delt på denne.
+      - expr: 1 - r * N
+        feedback: Diskontering er ikke å trekke fra renten. Bruk 1 / (1 + r)ⁿ.
+
+  - id: nv-tf-pv-80
+    type: truefalse
+    statement: Nåverdien av 100 kr om 2 år med 10 % rente er 80 kr.
+    answer: false
+    explanation: >-
+      100 / 1,10² = 100 / 1,21 = 82,64 kr. 80 kr får du ved å trekke fra 10 kr per år, og det er
+      ikke diskontering.
+
+  - id: nv-mcq-rente-opp-pv
+    type: mcq
+    prompt: Hva skjer med nåverdien av et fremtidig beløp når renten øker?
+    options:
+      - text: Den synker
+        correct: true
+        feedback: Riktig. Vi deler på et større tall, (1 + r)ⁿ.
+      - text: Den øker
+        feedback: Høyere rente betyr at et beløp i dag vokser mer. Et fremtidig beløp er da verdt mindre i dag.
+      - text: Den er uendret
+        feedback: Nåverdien avhenger av renten. Den synker når renten øker.
+      - text: Det avhenger av beløpets størrelse
+        feedback: Uansett beløp synker nåverdien når renten øker.
+
+  - id: nv-fc-annuitet
+    type: flashcard
+    front: Annuitet
+    back: En serie like store beløp med like lang avstand, f.eks. 50 000 kr ved slutten av hvert år i 5 år.
+
+  - id: nv-fc-af
+    type: flashcard
+    front: Annuitetsfaktor (nåverdi)
+    back: (1 − (1 + r)⁻ⁿ) / r. Nåverdien av 1 kr per år i n år. PV = A · annuitetsfaktoren.
+
+  - id: nv-num-annuitet
+    type: numeric
+    skillLevel: 1
+    vars:
+      A: { min: 10000, max: 60000, step: 2000 }
+      N: { min: 5, max: 20, step: 1 }
+      R: { min: 3, max: 10, step: 1 }
+    derived:
+      r: R / 100
+      AF: af(r, N)
+      PV: A * AF
+    prompt: >-
+      Solcelleanlegget på taket til Lillevik Mekaniske gir en strømbesparelse på {{A}} kr per år
+      i {{N}} år. Avkastningskravet er {{R}} %. Hva er nåverdien av besparelsene?
+    answer: { expr: PV, unit: kr }
+    steps:
+      - "Annuitetsfaktor = (1 − {{1 + r:2}}^−{{N}}) / {{r:2}} = {{AF:4}}"
+      - "PV = {{A}} · {{AF:4}} = {{PV:0}} kr"
+    misconceptions:
+      - expr: A * N
+        feedback: Du har lagt sammen beløpene uten å diskontere. Beløp i ulike år må regnes om til nåverdi først.
+      - expr: A * N / (1 + r) ^ N
+        feedback: Du diskonterte alle beløpene som om de kom i siste år. Hvert år må diskonteres for seg.
+      - expr: A / r
+        feedback: Dette er nåverdien av en evig annuitet. Her varer besparelsen bare i {{N}} år.
+
+  - id: nv-mcq-af-betyr
+    type: mcq
+    skillLevel: 2
+    prompt: Annuitetsfaktoren for 5 år og 10 % er 3,7908. Hva betyr det?
+    options:
+      - text: Nåverdien av 1 kr ved slutten av hvert år i 5 år er 3,79 kr
+        correct: true
+        feedback: Riktig. Summen av fem diskonteringsfaktorer er 3,7908.
+      - text: 1 kr vokser til 3,79 kr på 5 år
+        feedback: Det ville vært fremtidsverdi. 1,10⁵ = 1,61.
+      - text: Du må betale 3,79 kr per år
+        feedback: Annuitetsfaktoren er en nåverdi, ikke et årlig beløp.
+      - text: Den effektive renten er 3,79 %
+        feedback: Annuitetsfaktoren er ikke en rente. Den er nåverdien av 1 kr per år.
+
+  - id: nv-fc-nnv
+    type: flashcard
+    front: Netto nåverdi (NNV)
+    back: >-
+      Summen av nåverdiene til alle kontantstrømmene, inkludert investeringen i år 0.
+      NNV = −I₀ + K₁/(1 + r) + … + Kₙ/(1 + r)ⁿ
+
+  - id: nv-fc-regel
+    type: flashcard
+    front: Beslutningsregel for NNV
+    back: >-
+      NNV > 0: lønnsomt – gjennomfør. NNV < 0: ulønnsomt. NNV = 0: prosjektet gir akkurat
+      avkastningskravet.
+
+  - id: nv-fc-ar0
+    type: flashcard
+    front: Hvorfor diskonteres ikke år 0?
+    back: Beløpet betales i dag og er allerede i nåverdi. (1 + r)⁰ = 1.
+
+  - id: nv-num-nnv3
+    type: numeric
+    skillLevel: 1
+    vars:
+      I: { min: 100000, max: 400000, step: 10000 }
+      K1: { min: 30000, max: 200000, step: 5000 }
+      K2: { min: 30000, max: 200000, step: 5000 }
+      K3: { min: 30000, max: 200000, step: 5000 }
+      R: { min: 5, max: 12, step: 1 }
+    derived:
+      r: R / 100
+      P1: K1 / (1 + r)
+      P2: K2 / (1 + r) ^ 2
+      P3: K3 / (1 + r) ^ 3
+      NNV: -I + P1 + P2 + P3
+    constraints: ["abs(NNV) > I * 0.02", "abs(NNV) < I * 0.6"]
+    prompt: >-
+      Tråkk AS vurderer å kjøpe en servicemaskin for {{I}} kr. Den gir innbetalingsoverskudd på
+      {{K1}} kr i år 1, {{K2}} kr i år 2 og {{K3}} kr i år 3. Avkastningskravet er {{R}} %.
+      Hva er netto nåverdi?
+    answer: { expr: NNV, unit: kr }
+    tolerance: { abs: "I * 0.002", rel: 0 }
+    steps:
+      - "År 1: {{K1}} / {{1 + r:2}} = {{P1:0}} kr"
+      - "År 2: {{K2}} / {{1 + r:2}}² = {{P2:0}} kr"
+      - "År 3: {{K3}} / {{1 + r:2}}³ = {{P3:0}} kr"
+      - "NNV = −{{I}} + {{P1:0}} + {{P2:0}} + {{P3:0}} = {{NNV:0}} kr"
+    misconceptions:
+      - expr: NNV / (1 + r)
+        feedback: Du har diskontert ett år for mye – trolig også investeringen i år 0. Beløp i år 0 skal ikke diskonteres.
+      - expr: -I + K1 + K2 + K3
+        feedback: Du har ikke diskontert. Innbetalingene i år 1–3 må regnes om til nåverdi.
+      - expr: P1 + P2 + P3
+        feedback: Dette er nåverdien av innbetalingene. Husk å trekke fra investeringen.
+    figure:
+      kind: timeline
+      flows: "[-I, K1, K2, K3]"
+      rate: r
+    figureShow: prompt
+
+  - id: nv-num-nnv-ann
+    type: numeric
+    skillLevel: 1
+    vars:
+      I: { min: 200000, max: 800000, step: 20000 }
+      A: { min: 20000, max: 120000, step: 5000 }
+      N: { min: 5, max: 15, step: 1 }
+      R: { min: 4, max: 10, step: 1 }
+    derived:
+      r: R / 100
+      AF: af(r, N)
+      NNV: -I + A * AF
+    constraints: ["abs(NNV) > I * 0.02", "abs(NNV) < I * 0.6"]
+    prompt: >-
+      Solkraft AS vurderer et solcelleanlegg som koster {{I}} kr. Anlegget gir årlige besparelser
+      på {{A}} kr i {{N}} år. Avkastningskravet er {{R}} %. Hva er netto nåverdi?
+    answer: { expr: NNV, unit: kr }
+    tolerance: { abs: "I * 0.002", rel: 0 }
+    steps:
+      - "Annuitetsfaktor ({{R}} %, {{N}} år) = {{AF:4}}"
+      - "Nåverdi av besparelsene = {{A}} · {{AF:4}} = {{A * AF:0}} kr"
+      - "NNV = −{{I}} + {{A * AF:0}} = {{NNV:0}} kr"
+    misconceptions:
+      - expr: -I + A * N
+        feedback: Du har ikke diskontert besparelsene. Bruk annuitetsfaktoren.
+      - expr: A * AF
+        feedback: Dette er nåverdien av besparelsene. Husk å trekke fra investeringen.
+      - expr: NNV / (1 + r)
+        feedback: Investeringen skjer i dag (år 0) og skal ikke diskonteres.
+
+  - id: nv-num-nnv-rest
+    type: numeric
+    skillLevel: 2
+    vars:
+      I: { min: 300000, max: 900000, step: 20000 }
+      A: { min: 40000, max: 150000, step: 5000 }
+      N: { min: 5, max: 10, step: 1 }
+      RVP: { choices: [0.1, 0.15, 0.2, 0.25] }
+      R: { min: 5, max: 10, step: 1 }
+    derived:
+      r: R / 100
+      RV: I * RVP
+      AF: af(r, N)
+      PVA: A * AF
+      PVR: RV / (1 + r) ^ N
+      NNV: -I + PVA + PVR
+    constraints: ["abs(NNV) > I * 0.02", "abs(NNV) < I * 0.6"]
+    prompt: >-
+      Lillevik Mekaniske vurderer en ny, energieffektiv produksjonsmaskin til {{I}} kr. Den gir
+      økte innbetalingsoverskudd på {{A}} kr per år i {{N}} år. Etter {{N}} år kan maskinen
+      selges for {{RV}} kr. Avkastningskravet er {{R}} %. Hva er netto nåverdi?
+    answer: { expr: NNV, unit: kr }
+    tolerance: { abs: "I * 0.002", rel: 0 }
+    steps:
+      - "Nåverdi av årlige overskudd = {{A}} · {{AF:4}} = {{PVA:0}} kr"
+      - "Nåverdi av restverdien = {{RV}} / {{1 + r:2}}^{{N}} = {{PVR:0}} kr"
+      - "NNV = −{{I}} + {{PVA:0}} + {{PVR:0}} = {{NNV:0}} kr"
+    misconceptions:
+      - expr: -I + PVA
+        feedback: Du har glemt restverdien. Den kommer i år {{N}} og må diskonteres.
+      - expr: -I + PVA + RV
+        feedback: Restverdien kommer om {{N}} år og må diskonteres, akkurat som de andre beløpene.
+      - expr: -I + A * N + RV
+        feedback: Du har ikke diskontert noe. Alle beløp etter år 0 må regnes om til nåverdi.
+
+  - id: nv-mcq-lonnsom
+    type: mcq
+    skillLevel: 1
+    vars:
+      I: { min: 50000, max: 200000, step: 10000 }
+      KP: { choices: [1.03, 1.05, 1.06, 1.08, 1.1, 1.12, 1.15] }
+      R: { min: 4, max: 12, step: 1 }
+    derived:
+      r: R / 100
+      K: I * KP
+      NNV: K / (1 + r) - I
+    constraints: ["abs(NNV) > I * 0.01"]
+    prompt: >-
+      En investering på {{I}} kr i dag gir {{K}} kr om nøyaktig ett år. Avkastningskravet er
+      {{R}} %. Er investeringen lønnsom?
+    options:
+      - text: Ja – NNV er positiv
+        correct: NNV > 0
+      - text: Nei – NNV er negativ
+        correct: NNV < 0
+      - text: Det kan ikke avgjøres uten å kjenne inflasjonen
+        feedback: Avkastningskravet tar allerede hensyn til det investorene krever. Regn ut NNV.
+    explanation: "NNV = −{{I}} + {{K}} / {{1 + r:2}} = {{NNV:0}} kr."
+
+  - id: nv-mcq-krav-opp
+    type: mcq
+    skillLevel: 2
+    prompt: >-
+      Et prosjekt med en investering i dag og innbetalinger senere har NNV = 50 000 kr ved 6 %
+      avkastningskrav. Hva skjer med NNV hvis kravet økes til 10 %?
+    options:
+      - text: NNV synker
+        correct: true
+        feedback: Riktig. De fremtidige innbetalingene diskonteres hardere, mens investeringen i år 0 er den samme.
+      - text: NNV øker
+        feedback: Høyere krav gir lavere nåverdi av de fremtidige innbetalingene, og dermed lavere NNV.
+      - text: NNV er uendret – kontantstrømmene er de samme
+        feedback: Kontantstrømmene er de samme, men nåverdien av dem endres med renten.
+      - text: NNV blir alltid negativ
+        feedback: NNV synker, men om den blir negativ, avhenger av hvor mye. Det kan ikke avgjøres her.
+
+  - id: nv-fc-krav
+    type: flashcard
+    front: Avkastningskrav
+    back: >-
+      Minste avkastning investorene krever, også kalt kalkulasjonsrente. Tilsvarer avkastningen på en
+      alternativ investering med samme risiko (alternativkostnaden). Høyere risiko gir høyere krav.
+
+  - id: nv-tf-nnv0
+    type: truefalse
+    statement: NNV = 0 betyr at prosjektet gir akkurat like høy avkastning som avkastningskravet.
+    answer: true
+    explanation: Ved NNV = 0 er avkastningskravet lik prosjektets internrente.
+
+  - id: nv-mcq-negativ-nnv
+    type: mcq
+    skillLevel: 2
+    tags: [kritisk, bærekraft]
+    prompt: Solcelleprosjektet til Solkraft AS har NNV = −20 000 kr med 7 % avkastningskrav. Hva betyr det?
+    options:
+      - text: Prosjektet gir lavere avkastning enn 7 %, men kan likevel gi positiv avkastning
+        correct: true
+        feedback: Riktig. Negativ NNV betyr at avkastningen er lavere enn kravet – ikke nødvendigvis at prosjektet taper penger.
+      - text: Prosjektet går med 20 000 kr i tap
+        feedback: Ikke nødvendigvis. Negativ NNV betyr at avkastningen er lavere enn kravet, ikke at prosjektet taper penger.
+      - text: Prosjektet bør gjennomføres fordi det er bærekraftig
+        feedback: Bærekraft kan være et argument, men det må vurderes for seg. Økonomisk sett gir prosjektet ikke 7 %.
+      - text: Beregningen må være feil – NNV kan ikke være negativ
+        feedback: NNV er negativ når nåverdien av innbetalingene er lavere enn investeringen.
+
+  - id: nv-mcq-krav-valg
+    type: mcq
+    skillLevel: 2
+    tags: [kritisk]
+    prompt: >-
+      Hvorfor kan det være feil å bruke bankens innskuddsrente på 2 % som avkastningskrav for en
+      risikabel investering i en ny maskin?
+    options:
+      - text: Avkastningskravet skal gjenspeile risikoen, og en risikabel investering krever høyere avkastning enn et bankinnskudd
+        correct: true
+        feedback: Riktig. Kravet skal tilsvare avkastningen på en alternativ investering med samme risiko.
+      - text: Bankrenten er alltid for høy
+        feedback: Problemet er det motsatte. For en risikabel investering er bankrenten for lav.
+      - text: Avkastningskravet skal alltid være 10 %
+        feedback: Det finnes ikke ett fast krav. Det avhenger av risikoen i prosjektet.
+      - text: Det spiller ingen rolle hvilken rente som brukes
+        feedback: Renten påvirker NNV mye. Et for lavt krav får dårlige prosjekter til å se lønnsomme ut.
+
+  - id: nv-mcq-solcelle-usikkerhet
+    type: mcq
+    skillLevel: 2
+    tags: [kritisk, bærekraft]
+    prompt: >-
+      Solkraft AS beregner NNV for et solcelleanlegg og antar en strømpris på 1,50 kr/kWh i alle
+      25 årene. Hva er den viktigste svakheten ved beregningen?
+    options:
+      - text: Fremtidige strømpriser er svært usikre, så besparelsen kan bli helt annerledes
+        correct: true
+        feedback: Riktig. Lange prosjekter er følsomme for antakelser om priser. En følsomhetsanalyse hjelper.
+      - text: Solceller varer bare i 5 år
+        feedback: Solcellepaneler varer typisk 25–30 år. Det store usikkerhetsmomentet er strømprisen.
+      - text: Strømprisen skulle vært diskontert to ganger
+        feedback: Hver kontantstrøm diskonteres én gang. Problemet er usikkerheten i selve prisen.
+      - text: Det er ingen svakhet
+        feedback: En fast pris i 25 år er en sterk forenkling. Den bør utfordres.

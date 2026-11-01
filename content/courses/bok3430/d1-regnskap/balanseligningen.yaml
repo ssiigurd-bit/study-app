@@ -1,0 +1,460 @@
+# Delemne 1 – Balanseligningen og transaksjoner
+# Alt innhold er generert og IKKE kontrollert mot pensum (verified: false er standard).
+# Rekkefølgen på oppgavene er rekkefølgen nytt stoff introduseres i.
+
+id: balanseligningen
+title: Balanseligningen og transaksjoner
+summary: Hvordan eiendeler, egenkapital og gjeld henger sammen, og hvordan transaksjoner påvirker balansen og resultatet.
+
+intro:
+  - id: bal-intro-balansen
+    title: Balansen – to sider av samme sak
+    body: |
+      Balansen viser bedriftens stilling på **ett tidspunkt**.
+
+      - **Eiendeler:** hva bedriften eier eller disponerer – bank, varelager, maskiner.
+      - **Egenkapital og gjeld:** hvordan eiendelene er finansiert.
+
+      Begge sider har alltid samme sum.
+    figure:
+      kind: balance
+      title: Kafé Bønna, 31.12
+      assets:
+        - { label: Inventar, value: 150000 }
+        - { label: Varelager, value: 30000 }
+        - { label: Bank, value: 70000 }
+      claims:
+        - { label: Egenkapital, value: 100000, type: ek }
+        - { label: Banklån, value: 120000, type: gjeld }
+        - { label: Leverandørgjeld, value: 30000, type: gjeld }
+
+  - id: bal-intro-ligningen
+    title: Balanseligningen
+    body: |
+      $ Eiendeler = Egenkapital + Gjeld
+
+      Snur vi på den, får vi egenkapitalen:
+
+      $ Egenkapital = Eiendeler − Gjeld
+
+      Egenkapitalen er det som ville blitt igjen til eierne om all gjeld ble betalt.
+
+  - id: bal-intro-transaksjoner
+    before: bal-mcq-lan
+    title: Hver transaksjon endrer minst to poster
+    body: |
+      En transaksjon påvirker alltid minst to poster – og balansen går fortsatt opp. Fire mønstre:
+
+      - **Begge sider øker:** lån i banken (bank +, gjeld +)
+      - **Begge sider minker:** betale ned gjeld (bank −, gjeld −)
+      - **Bytte mellom eiendeler:** kjøpe maskin kontant (maskin +, bank −)
+      - **Bytte på finansieringssiden:** gjeld gjøres om til egenkapital
+
+  - id: bal-intro-resultat
+    before: bal-tf-kunde-betaler
+    title: Resultatet og egenkapitalen
+    body: |
+      $ Resultat = Inntekter − Kostnader
+
+      Inntekter øker egenkapitalen, kostnader reduserer den.
+
+      Uttak og utbytte til eierne reduserer også egenkapitalen, men er **ikke** kostnader.
+
+      Et lån eller en innbetaling fra en kunde er **ikke** inntekt.
+
+items:
+  - id: bal-fc-ligningen
+    type: flashcard
+    front: Balanseligningen
+    back: Eiendeler = Egenkapital + Gjeld
+
+  - id: bal-fc-ek
+    type: flashcard
+    front: Egenkapital
+    back: >-
+      Eiernes andel av bedriften: Eiendeler − Gjeld. Består av innskutt kapital (det eierne har
+      skutt inn) og opptjent kapital (overskudd som er holdt tilbake i bedriften).
+
+  - id: bal-tf-alltid-lik
+    type: truefalse
+    statement: Summen av eiendelene er alltid lik summen av egenkapital og gjeld.
+    answer: true
+    explanation: >-
+      Alt bedriften eier, er finansiert enten av eierne (egenkapital) eller av
+      långivere (gjeld). Derfor går balansen alltid opp.
+
+  - id: bal-num-ek
+    type: numeric
+    skillLevel: 1
+    vars:
+      INV: { min: 50000, max: 300000, step: 10000 }
+      VL: { min: 20000, max: 150000, step: 5000 }
+      KF: { min: 0, max: 60000, step: 5000 }
+      BANK: { min: 10000, max: 200000, step: 5000 }
+      LG: { min: 10000, max: 80000, step: 5000 }
+      BL: { min: 50000, max: 300000, step: 10000 }
+    derived:
+      E: INV + VL + KF + BANK
+      G: LG + BL
+      EK: E - G
+    constraints: ["EK >= 20000"]
+    prompt: >-
+      Sykkelbutikken Tråkk AS har per 31.12 inventar for {{INV}} kr, varelager for {{VL}} kr,
+      kundefordringer på {{KF}} kr og {{BANK}} kr i banken. Gjelden består av leverandørgjeld på
+      {{LG}} kr og et banklån på {{BL}} kr. Hva er egenkapitalen?
+    answer: { expr: EK, unit: kr }
+    tolerance: { rel: 0 }
+    steps:
+      - "Sum eiendeler: {{INV}} + {{VL}} + {{KF}} + {{BANK}} = {{E}} kr"
+      - "Sum gjeld: {{LG}} + {{BL}} = {{G}} kr"
+      - "Egenkapital = Eiendeler − Gjeld = {{E}} − {{G}} = {{EK}} kr"
+    misconceptions:
+      - expr: E
+        feedback: Det er sum eiendeler. Egenkapitalen er det som er igjen når gjelden er trukket fra.
+      - expr: G
+        feedback: Det er sum gjeld. Egenkapitalen er eiendeler minus gjeld.
+      - expr: E + G
+        feedback: Du la sammen eiendeler og gjeld. Gjelden skal trekkes fra eiendelene.
+    figure:
+      kind: balance
+      title: Tråkk AS, 31.12
+      assets:
+        - { label: Inventar, value: INV }
+        - { label: Varelager, value: VL }
+        - { label: Kundefordringer, value: KF }
+        - { label: Bank, value: BANK }
+      claims:
+        - { label: Egenkapital, value: EK, type: ek }
+        - { label: Banklån, value: BL, type: gjeld }
+        - { label: Leverandørgjeld, value: LG, type: gjeld }
+
+  - id: bal-fc-anleggsmidler
+    type: flashcard
+    front: Anleggsmidler
+    back: Eiendeler bestemt til varig eie eller bruk, f.eks. maskiner, bygninger, inventar og biler.
+
+  - id: bal-fc-omlopsmidler
+    type: flashcard
+    front: Omløpsmidler
+    back: Eiendeler som ikke er bestemt til varig eie, f.eks. varelager, kundefordringer og bankinnskudd.
+
+  - id: bal-mcq-klassifiser
+    type: mcq
+    prompt: Hvilken av disse er et omløpsmiddel for sykkelbutikken Tråkk AS?
+    options:
+      - text: Syklene som står på lager for salg
+        correct: true
+        feedback: Riktig. Varelageret skal selges, så det er et omløpsmiddel.
+      - text: Butikkinnredningen
+        feedback: Innredningen skal brukes i mange år. Den er et anleggsmiddel.
+      - text: Varebilen som brukes til levering
+        feedback: Varebilen er bestemt til varig bruk. Den er et anleggsmiddel.
+      - text: Banklånet
+        feedback: Et lån er gjeld, ikke en eiendel.
+
+  - id: bal-fc-kortsiktig
+    type: flashcard
+    front: Kortsiktig gjeld
+    back: Gjeld som forfaller innen ett år, f.eks. leverandørgjeld, skyldig merverdiavgift og kassakreditt.
+
+  - id: bal-fc-langsiktig
+    type: flashcard
+    front: Langsiktig gjeld
+    back: Gjeld som forfaller senere enn ett år, f.eks. et pantelån i banken.
+
+  - id: bal-fc-kundefordringer
+    type: flashcard
+    front: Kundefordringer
+    back: Det kundene skylder bedriften for varer og tjenester som er solgt på kreditt. En eiendel.
+
+  - id: bal-fc-leverandorgjeld
+    type: flashcard
+    front: Leverandørgjeld
+    back: Det bedriften skylder leverandørene for kjøp på kreditt. Kortsiktig gjeld.
+
+  - id: bal-num-eiendeler
+    type: numeric
+    skillLevel: 1
+    vars:
+      EK: { min: 100000, max: 500000, step: 10000 }
+      KG: { min: 20000, max: 150000, step: 5000 }
+      LGJ: { min: 0, max: 400000, step: 25000 }
+    derived:
+      E: EK + KG + LGJ
+    prompt: >-
+      Lillevik Mekaniske AS har egenkapital på {{EK}} kr, kortsiktig gjeld på {{KG}} kr og
+      langsiktig gjeld på {{LGJ}} kr. Hva er sum eiendeler?
+    answer: { expr: E, unit: kr }
+    tolerance: { rel: 0 }
+    steps:
+      - "Eiendeler = Egenkapital + Gjeld"
+      - "= {{EK}} + {{KG}} + {{LGJ}} = {{E}} kr"
+    misconceptions:
+      - expr: EK - KG - LGJ
+        feedback: >-
+          Du trakk fra gjelden. Eiendelene er finansiert av både egenkapital og gjeld,
+          så de skal legges sammen.
+      - expr: KG + LGJ
+        feedback: Du har bare tatt med gjelden. Egenkapitalen finansierer også eiendeler.
+
+  - id: bal-mcq-lan
+    type: mcq
+    prompt: Kafé Bønna tar opp et banklån på 200 000 kr, som settes inn på bankkontoen. Hvordan påvirkes balansen?
+    options:
+      - text: "Bank +200 000 og langsiktig gjeld +200 000"
+        correct: true
+        feedback: Riktig. Begge sider av balansen øker like mye.
+      - text: "Bank +200 000 og egenkapital +200 000"
+        feedback: Lånet må betales tilbake. Det er gjeld, ikke egenkapital.
+      - text: "Bank +200 000 og inntekter +200 000"
+        feedback: Et lån er ikke en inntekt og påvirker ikke resultatet.
+      - text: Ingen endring – pengene flyttes bare
+        feedback: Bankinnskuddet øker, og bedriften får en ny forpliktelse. Begge sider øker.
+
+  - id: bal-mcq-kreditt-varer
+    type: mcq
+    prompt: Tråkk AS kjøper sykler for 50 000 kr på kreditt (betales om 30 dager). Hva skjer?
+    options:
+      - text: "Varelager +50 000 og leverandørgjeld +50 000"
+        correct: true
+        feedback: Riktig. Syklene er en eiendel, og bedriften skylder leverandøren pengene.
+      - text: Varekostnad på 50 000 kr i resultatregnskapet
+        feedback: >-
+          Syklene er ikke solgt ennå. De blir varekostnad først når de selges. Nå ligger de på lager.
+      - text: "Bank −50 000 og varelager +50 000"
+        feedback: Kjøpet er på kreditt, så ingenting er betalt ennå. Banken endres først ved betaling.
+      - text: "Varelager +50 000 og egenkapital +50 000"
+        feedback: Bedriften skylder leverandøren pengene. Det er gjeld, ikke egenkapital.
+
+  - id: bal-mcq-delvis-kreditt
+    type: mcq
+    skillLevel: 1
+    vars:
+      V: { min: 20000, max: 100000, step: 5000 }
+      AND: { choices: [0.2, 0.4, 0.5, 0.6] }
+    derived:
+      K: V * AND
+      KR: V - K
+    prompt: >-
+      Tråkk AS kjøper sykler for {{V}} kr. {{K}} kr betales kontant fra banken, resten på kreditt.
+      Hvordan påvirkes balansen?
+    options:
+      - text: "Varelager +{{V}}, bank −{{K}}, leverandørgjeld +{{KR}}"
+        correct: true
+        feedback: Riktig. Eiendelene øker netto med {{KR}} kr, og gjelden øker like mye.
+      - text: "Varelager +{{V}}, bank −{{V}}"
+        feedback: Bare {{K}} kr er betalt. Resten, {{KR}} kr, er ny leverandørgjeld.
+      - text: "Varekostnad {{V}}, bank −{{K}}, leverandørgjeld +{{KR}}"
+        feedback: Syklene er ikke solgt. De ligger på lager og er en eiendel, ikke en kostnad.
+      - text: "Varelager +{{V}}, leverandørgjeld +{{V}}"
+        feedback: En del ble betalt kontant, så banken går ned med {{K}} kr og gjelden øker bare med {{KR}} kr.
+
+  - id: bal-mcq-betal-gjeld
+    type: mcq
+    prompt: Tråkk AS betaler 30 000 kr av leverandørgjelden fra bankkontoen. Hva skjer?
+    options:
+      - text: "Bank −30 000 og leverandørgjeld −30 000"
+        correct: true
+        feedback: Riktig. Begge sider av balansen minker like mye.
+      - text: En kostnad på 30 000 kr
+        feedback: Ingen ny kostnad oppstår. Bedriften betaler bare gjeld som allerede er registrert.
+      - text: "Bank −30 000 og egenkapital −30 000"
+        feedback: Egenkapitalen endres ikke. Eiendeler og gjeld minker like mye.
+      - text: "Bank −30 000 og leverandørgjeld +30 000"
+        feedback: Gjelden blir mindre når den betales, ikke større.
+
+  - id: bal-mcq-maskin
+    type: mcq
+    prompt: >-
+      Lillevik Mekaniske kjøper en ny maskin for 120 000 kr og betaler kontant fra banken.
+      Hvordan endres egenkapitalen på kjøpstidspunktet?
+    options:
+      - text: Den endres ikke
+        correct: true
+        feedback: >-
+          Riktig. Bankinnskudd byttes mot en maskin, så sum eiendeler er uendret.
+          Maskinen blir kostnad gradvis gjennom avskrivninger.
+      - text: Den går ned med 120 000 kr
+        feedback: Maskinen er en eiendel. Du bytter bankinnskudd mot en maskin – ingenting er «brukt opp» ennå.
+      - text: Den går opp med 120 000 kr
+        feedback: Bedriften får en maskin, men mister like mye i banken. Egenkapitalen endres ikke.
+      - text: Den går ned med første års avskrivning
+        feedback: >-
+          Avskrivningen kommer i resultatet over tid, gjennom året. Selve kjøpet endrer ikke egenkapitalen.
+
+  - id: bal-tf-kunde-betaler
+    type: truefalse
+    statement: Når en kunde betaler en faktura, øker bedriftens inntekter.
+    answer: false
+    explanation: >-
+      Inntekten ble registrert da varen ble solgt. Når kunden betaler, går kundefordringer ned og
+      bank opp – et bytte mellom to eiendeler. Dette er forskjellen på **inntekt** og **innbetaling**.
+
+  - id: bal-tf-lan-ek
+    type: truefalse
+    statement: Et banklån øker egenkapitalen fordi bedriften får mer penger.
+    answer: false
+    explanation: >-
+      Lånet øker banken (eiendel) og gjelden like mye. Egenkapitalen er uendret, fordi pengene
+      skal betales tilbake.
+
+  - id: bal-mcq-salg
+    type: mcq
+    prompt: Tråkk AS selger en sykkel kontant for 8 000 kr. Sykkelen kostet 5 000 kr å kjøpe inn. Hva skjer i balansen?
+    options:
+      - text: "Bank +8 000, varelager −5 000, egenkapital +3 000"
+        correct: true
+        feedback: Riktig. Fortjenesten på 3 000 kr øker egenkapitalen via resultatet.
+      - text: "Bank +8 000, egenkapital +8 000"
+        feedback: >-
+          Du har glemt at sykkelen forsvinner fra lageret. Varekostnaden på 5 000 kr reduserer egenkapitalen.
+      - text: "Bank +8 000, varelager −8 000"
+        feedback: >-
+          Varelageret står oppført til innkjøpsprisen, 5 000 kr. Forskjellen er fortjeneste, som øker egenkapitalen.
+      - text: "Bank +3 000, egenkapital +3 000"
+        feedback: Kunden betaler hele salgsprisen, 8 000 kr, inn i banken.
+
+  - id: bal-mcq-uttak
+    type: mcq
+    prompt: Eieren av Kafé Bønna tar ut 10 000 kr fra bedriftens konto til privat bruk. Hva er riktig?
+    options:
+      - text: "Bank −10 000 og egenkapital −10 000, men det er ikke en kostnad"
+        correct: true
+        feedback: Riktig. Uttak reduserer egenkapitalen direkte, uten å gå via resultatregnskapet.
+      - text: En kostnad på 10 000 kr i resultatregnskapet
+        feedback: Uttak er ikke en kostnad. Det er en overføring til eieren som reduserer egenkapitalen direkte.
+      - text: "Bank −10 000 og gjeld +10 000"
+        feedback: Eieren har ikke lånt ut noe. Egenkapitalen, ikke gjelden, endres.
+      - text: Ingen endring i balansen
+        feedback: Pengene forsvinner ut av bedriften, så både bank og egenkapital går ned.
+
+  - id: bal-mcq-husleie
+    type: mcq
+    prompt: Kafé Bønna betaler månedens husleie på 15 000 kr fra banken. Hva skjer?
+    options:
+      - text: "En kostnad på 15 000 kr: bank −15 000 og egenkapital −15 000"
+        correct: true
+        feedback: Riktig. Husleien er brukt opp i måneden, så den er en kostnad som reduserer egenkapitalen.
+      - text: "Bank −15 000 og inventar +15 000"
+        feedback: Husleien gir ingen eiendel bedriften eier etterpå. Den er en kostnad.
+      - text: "Bank −15 000 og gjeld −15 000"
+        feedback: Husleien for denne måneden var ikke registrert som gjeld. Den er en kostnad.
+      - text: "Bare bank −15 000"
+        feedback: Balansen må gå opp. Når banken minker uten at noe annet øker, går egenkapitalen ned via resultatet.
+
+  - id: bal-tf-utbytte
+    type: truefalse
+    statement: Utbytte til eierne er en kostnad i resultatregnskapet.
+    answer: false
+    explanation: >-
+      Utbytte er en fordeling av overskuddet til eierne. Det reduserer egenkapitalen, men er ikke en kostnad.
+
+  - id: bal-fc-varekostnad
+    type: flashcard
+    front: Varekostnad
+    back: Innkjøpsverdien av varene som er **solgt** i perioden – ikke det som er kjøpt inn.
+
+  - id: bal-fc-ek-endring
+    type: flashcard
+    front: Hva endrer egenkapitalen?
+    back: >-
+      Øker: innskudd fra eierne og overskudd. Minker: underskudd og uttak/utbytte. Lån, kjøp av
+      eiendeler og betaling av gjeld endrer den ikke.
+
+  - id: bal-fc-res-vs-bal
+    type: flashcard
+    front: Resultatregnskap vs. balanse
+    back: >-
+      Resultatregnskapet viser inntekter og kostnader for en **periode**. Balansen viser eiendeler,
+      egenkapital og gjeld på et **tidspunkt**.
+
+  - id: bal-num-resultat-varekost
+    type: numeric
+    skillLevel: 1
+    vars:
+      K: { min: 100000, max: 300000, step: 10000 }
+      C: { min: 60000, max: 250000, step: 5000 }
+      MU: { choices: [1.4, 1.5, 1.6, 1.8] }
+      A: { min: 10000, max: 60000, step: 5000 }
+    derived:
+      S: C * MU
+      RES: S - C - A
+    constraints: ["C <= K - 10000", "RES > 0"]
+    prompt: >-
+      Tråkk AS kjøpte i januar inn sykler for {{K}} kr. I løpet av måneden solgte de sykler for
+      {{S}} kr. Syklene som ble solgt, hadde kostet {{C}} kr å kjøpe inn. Andre kostnader var
+      {{A}} kr. Hva ble resultatet for januar?
+    answer: { expr: RES, unit: kr }
+    tolerance: { rel: 0 }
+    steps:
+      - "Varekostnad = innkjøpsverdien av solgte varer = {{C}} kr (ikke hele innkjøpet)"
+      - "Resultat = {{S}} − {{C}} − {{A}} = {{RES}} kr"
+    misconceptions:
+      - expr: S - K - A
+        feedback: >-
+          Du trakk fra hele innkjøpet. Bare innkjøpsverdien av de solgte syklene er varekostnad.
+          Resten ligger fortsatt på lager som en eiendel.
+      - expr: S - C
+        feedback: Du glemte de andre kostnadene på {{A}} kr.
+      - expr: S - A
+        feedback: Du glemte varekostnaden – innkjøpsverdien av syklene som ble solgt.
+
+  - id: bal-num-maskin-kreditt
+    type: numeric
+    skillLevel: 2
+    vars:
+      M: { min: 40000, max: 160000, step: 10000 }
+    derived:
+      H: M / 2
+    prompt: >-
+      Kafé Bønna kjøper en espressomaskin for {{M}} kr. Halvparten betales kontant fra banken,
+      resten skal betales om 60 dager. Med hvor mange kroner endres sum eiendeler?
+    answer: { expr: H, unit: kr }
+    tolerance: { rel: 0 }
+    steps:
+      - "Maskin: +{{M}} kr"
+      - "Bank: −{{H}} kr"
+      - "Netto endring i eiendeler: {{M}} − {{H}} = {{H}} kr (finansiert av ny leverandørgjeld)"
+    misconceptions:
+      - expr: M
+        feedback: Banken går ned med halvparten, så eiendelene øker ikke med hele beløpet.
+      - expr: "0"
+        feedback: Bare halvparten er betalt. Resten er ny gjeld, så eiendelene øker med den delen.
+      - expr: -H
+        feedback: Maskinen er en eiendel som kommer inn. Eiendelene øker netto.
+
+  - id: bal-num-ek-etter
+    type: numeric
+    skillLevel: 2
+    tags: [irrelevant-info]
+    vars:
+      EK0: { min: 100000, max: 400000, step: 10000 }
+      S: { min: 600000, max: 1500000, step: 50000 }
+      VKP: { choices: [0.3, 0.35, 0.4] }
+      LH: { min: 200000, max: 600000, step: 20000 }
+      L: { min: 50000, max: 300000, step: 50000 }
+      U: { min: 20000, max: 150000, step: 10000 }
+    derived:
+      VK: S * VKP
+      RES: S - VK - LH
+      EK1: EK0 + RES - U
+    constraints: ["RES > 0", "EK1 > 0"]
+    prompt: >-
+      Kafé Bønna hadde egenkapital på {{EK0}} kr 1. januar. I løpet av året var salgsinntektene
+      {{S}} kr, varekostnaden {{VK}} kr og lønn og husleie {{LH}} kr. Kafeen tok opp et nytt
+      banklån på {{L}} kr, og eieren tok ut {{U}} kr. Hva er egenkapitalen 31. desember?
+    answer: { expr: EK1, unit: kr }
+    tolerance: { rel: 0 }
+    steps:
+      - "Årets resultat: {{S}} − {{VK}} − {{LH}} = {{RES}} kr"
+      - "Lånet er gjeld og påvirker ikke egenkapitalen"
+      - "Egenkapital 31.12 = {{EK0}} + {{RES}} − {{U}} = {{EK1}} kr"
+    misconceptions:
+      - expr: EK1 + L
+        feedback: Lånet er gjeld, ikke egenkapital. Det påvirker ikke egenkapitalen.
+      - expr: EK0 + RES
+        feedback: Uttaket er ikke en kostnad, men det reduserer egenkapitalen.
+      - expr: RES
+        feedback: Det er årets resultat. Egenkapitalen ved årets slutt er inngående egenkapital + resultat − uttak.
+      - expr: RES - U
+        feedback: Du har glemt egenkapitalen fra 1. januar.

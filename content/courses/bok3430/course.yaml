@@ -1,0 +1,17 @@
+# Emnebeskrivelse. Rekkefølgen her er rekkefølgen i appen.
+id: bok3430
+code: BØK 3430
+title: Innføring i bedriftsøkonomi og finans
+description: >-
+  Førsteårsemne ved BI. Pensum: Terje Berg, «Grunnleggende økonomistyring».
+  Eksamen: 3 timers strukturert test, enkel kalkulator.
+delemner:
+  - id: d1-regnskap
+    title: Regnskap og budsjettering
+    topics: [balanseligningen]
+  - id: d2-kostnad
+    title: Kostnads- og inntektsanalyse
+    topics: [nullpunkt]
+  - id: d3-finans
+    title: Finans – investeringsanalyse
+    topics: [naverdi]

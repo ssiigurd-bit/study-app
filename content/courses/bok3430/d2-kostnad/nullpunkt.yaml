@@ -1,0 +1,542 @@
+# Delemne 2 – Nullpunktsanalyse (med grunnleggende kostnadsteori)
+# Alt innhold er generert og IKKE kontrollert mot pensum (verified: false er standard).
+
+id: nullpunkt
+title: Nullpunktsanalyse
+summary: Faste og variable kostnader, dekningsbidrag, dekningsgrad, nullpunkt og sikkerhetsmargin.
+
+intro:
+  - id: np-intro-fk-vk
+    title: Faste og variable kostnader
+    body: |
+      **Faste kostnader (FK)** endrer seg ikke med hvor mye du produserer og selger – innenfor en periode og en gitt kapasitet. Eksempler: husleie, fast lønn, forsikring.
+
+      **Variable kostnader** øker med mengden. For en kafé: kaffebønner, melk, kopper.
+
+      $ Totale kostnader = FK + VEK · x
+
+      VEK er variabel kostnad per enhet, og x er mengden.
+
+  - id: np-intro-db
+    before: np-fc-db
+    title: Dekningsbidraget
+    body: |
+      Hver solgte enhet gir et **dekningsbidrag (DB)**: det som er igjen av prisen når enhetens variable kostnader er dekket.
+
+      $ DB per enhet = P − VEK
+
+      $ Resultat = DB per enhet · x − FK
+
+      Dekningsbidraget dekker først de faste kostnadene. Alt utover det er overskudd.
+
+  - id: np-intro-nullpunkt
+    before: np-num-mengde
+    title: Nullpunktet
+    body: |
+      I nullpunktet er resultatet 0. Samlet dekningsbidrag dekker akkurat de faste kostnadene.
+
+      $ Nullpunktsmengde = FK / DB per enhet
+
+      I figuren krysser inntektslinjen kostnadslinjen i nullpunktet.
+    figure:
+      kind: cvp
+      title: P = 50, VEK = 20, FK = 60 000
+      price: 50
+      vc: 20
+      fc: 60000
+      volume: 3000
+
+  - id: np-intro-dg
+    before: np-fc-dg
+    title: Dekningsgrad og nullpunktsomsetning
+    body: |
+      **Dekningsgraden** sier hvor stor andel av hver salgskrone som er dekningsbidrag.
+
+      $ DG = DB / P
+
+      $ Nullpunktsomsetning = FK / DG
+
+      Bruk DG som desimaltall i formelen (40 % = 0,40). Nullpunktsomsetning er nyttig når bedriften selger mange ulike varer, så det ikke gir mening å telle enheter.
+
+  - id: np-intro-sm
+    before: np-fc-sm
+    title: Sikkerhetsmargin
+    body: |
+      Hvor mye kan salget falle før bedriften går i underskudd?
+
+      $ Sikkerhetsmargin = Budsjettert omsetning − Nullpunktsomsetning
+
+      $ Sikkerhetsmargin i % = Sikkerhetsmargin / Budsjettert omsetning · 100
+
+  - id: np-intro-forutsetninger
+    before: np-mcq-forutsetning
+    title: Forutsetningene bak modellen
+    body: |
+      Nullpunktsanalysen bygger på forenklinger:
+
+      - Prisen per enhet er den samme uansett mengde
+      - Variable kostnader per enhet er konstante (lineære kostnader)
+      - Faste kostnader er faste innenfor det aktuelle området
+      - Alt som produseres, blir solgt
+
+      Spør alltid: Holder forutsetningene i denne situasjonen?
+
+items:
+  - id: np-fc-fk
+    type: flashcard
+    front: Faste kostnader (FK)
+    back: >-
+      Kostnader som ikke endrer seg med produksjons- eller salgsmengden innenfor en periode og en
+      gitt kapasitet. Eksempler: husleie, fast lønn, forsikring.
+
+  - id: np-fc-vk
+    type: flashcard
+    front: Variable kostnader
+    back: "Kostnader som endrer seg med mengden. Eksempler: råvarer, emballasje, provisjon per solgte enhet."
+
+  - id: np-mcq-fast-kost
+    type: mcq
+    prompt: Hvilken kostnad er fast for Kafé Bønna på kort sikt?
+    options:
+      - text: Husleie for lokalet
+        correct: true
+        feedback: Riktig. Husleien er den samme enten kafeen selger 100 eller 5 000 kopper.
+      - text: Kaffebønner
+        feedback: Jo flere kopper, jo flere bønner. Det er en variabel kostnad.
+      - text: Engangskopper
+        feedback: Hver kopp som selges, bruker en engangskopp. Det er en variabel kostnad.
+      - text: Melk
+        feedback: Melkeforbruket øker med salget. Det er en variabel kostnad.
+
+  - id: np-mcq-variabel
+    type: mcq
+    prompt: Hvilken kostnad er variabel for sykkelbutikken Tråkk AS?
+    options:
+      - text: Innkjøpsprisen på syklene som selges
+        correct: true
+        feedback: Riktig. Hver solgte sykkel gir en varekostnad.
+      - text: Lønn til en fast ansatt butikkmedarbeider
+        feedback: Fast lønn betales uansett hvor mange sykler som selges. Den er fast.
+      - text: Husleie for butikklokalet
+        feedback: Husleien er den samme uansett salg. Den er fast.
+      - text: Årlig forsikringspremie
+        feedback: Forsikringen avhenger ikke av antall solgte sykler. Den er fast.
+
+  - id: np-fc-tk
+    type: flashcard
+    front: Totale kostnader
+    back: TK = FK + VEK · x
+
+  - id: np-fc-db
+    type: flashcard
+    front: Dekningsbidrag per enhet
+    back: DB = P − VEK. Det hver solgte enhet bidrar med til å dekke faste kostnader og gi overskudd.
+
+  - id: np-fc-resultat
+    type: flashcard
+    front: Resultat i bidragsmodellen
+    back: Resultat = DB per enhet · x − FK
+
+  - id: np-num-resultat
+    type: numeric
+    skillLevel: 1
+    vars:
+      P: { min: 35, max: 65, step: 5 }
+      VEK: { min: 8, max: 20, step: 1 }
+      FK: { min: 40000, max: 120000, step: 5000 }
+      X: { min: 2000, max: 6000, step: 100 }
+    derived:
+      DB: P - VEK
+      RES: DB * X - FK
+    prompt: >-
+      Kafé Bønna selger kaffe for {{P}} kr koppen. Variable kostnader er {{VEK}} kr per kopp, og
+      faste kostnader er {{FK}} kr per måned. I mars selger kafeen {{X}} kopper. Hva blir
+      resultatet for mars?
+    answer: { expr: RES, unit: kr }
+    steps:
+      - "DB per kopp = {{P}} − {{VEK}} = {{DB}} kr"
+      - "Samlet DB = {{DB}} · {{X}} = {{DB * X}} kr"
+      - "Resultat = {{DB * X}} − {{FK}} = {{RES}} kr"
+    misconceptions:
+      - expr: P * X - FK
+        feedback: Du har glemt de variable kostnadene. Bruk dekningsbidraget (P − VEK), ikke prisen.
+      - expr: DB * X
+        feedback: Det er samlet dekningsbidrag. Du må trekke fra de faste kostnadene.
+      - expr: P * X - VEK - FK
+        feedback: VEK er kostnad per kopp. Den må ganges med antall kopper.
+    figure:
+      kind: cvp
+      price: P
+      vc: VEK
+      fc: FK
+      volume: X
+
+  - id: np-num-mengde
+    type: numeric
+    skillLevel: 1
+    vars:
+      P: { min: 400, max: 900, step: 25 }
+      VEK: { min: 150, max: 500, step: 25 }
+      FK: { min: 200000, max: 900000, step: 10000 }
+    derived:
+      DB: P - VEK
+      X0: FK / DB
+    constraints: ["DB >= 100"]
+    prompt: >-
+      Lillevik Mekaniske produserer sykkelstativ. Prisen er {{P}} kr per stativ, variable
+      kostnader er {{VEK}} kr per stativ, og faste kostnader er {{FK}} kr per år. Hvor mange
+      stativ må selges for å gå i null?
+    answer: { expr: X0, unit: stk }
+    steps:
+      - "DB per stativ = {{P}} − {{VEK}} = {{DB}} kr"
+      - "Nullpunktsmengde = FK / DB = {{FK}} / {{DB}} = {{X0:1}} stativ"
+    misconceptions:
+      - expr: FK / P
+        feedback: >-
+          Du delte på prisen. Hvert stativ må først dekke sin egen variable kostnad, så bare
+          dekningsbidraget ({{DB}} kr) går til de faste kostnadene.
+      - expr: FK / VEK
+        feedback: Du delte på VEK. Nullpunktsmengden er FK delt på dekningsbidraget per enhet.
+    figure:
+      kind: cvp
+      price: P
+      vc: VEK
+      fc: FK
+
+  - id: np-tf-nullpunkt-db
+    type: truefalse
+    statement: I nullpunktet er samlet dekningsbidrag lik de faste kostnadene.
+    answer: true
+    explanation: Resultat = DB − FK = 0, altså DB = FK.
+
+  - id: np-fc-nullpunktsmengde
+    type: flashcard
+    front: Nullpunktsmengde
+    back: FK / DB per enhet. Mengden der resultatet er 0.
+
+  - id: np-mcq-hvorfor-db
+    type: mcq
+    skillLevel: 2
+    prompt: Hvorfor deler vi de faste kostnadene på dekningsbidraget og ikke på prisen når vi finner nullpunktet?
+    options:
+      - text: Fordi en del av prisen går med til å dekke den variable kostnaden for enheten selv
+        correct: true
+        feedback: Riktig. Bare det som er igjen etter de variable kostnadene, kan dekke de faste.
+      - text: Fordi prisen kan endre seg
+        feedback: Modellen antar faktisk at prisen er konstant. Grunnen er at VEK må dekkes først.
+      - text: Fordi faste kostnader er oppgitt per enhet
+        feedback: Faste kostnader er et totalbeløp per periode, ikke per enhet.
+      - text: Det er bare en konvensjon – begge gir samme svar
+        feedback: De gir ulike svar. Å dele på prisen undervurderer nullpunktet fordi VEK ignoreres.
+
+  - id: np-fc-dg
+    type: flashcard
+    front: Dekningsgrad (DG)
+    back: DG = DB / P. Andelen av hver salgskrone som blir dekningsbidrag. Oppgis ofte i prosent.
+
+  - id: np-num-dg
+    type: numeric
+    skillLevel: 1
+    vars:
+      P: { min: 6000, max: 15000, step: 500 }
+      VEK: { min: 3000, max: 10000, step: 250 }
+    derived:
+      DG: (P - VEK) / P * 100
+    constraints: ["VEK <= P * 0.8", "VEK >= P * 0.4"]
+    prompt: >-
+      Tråkk AS selger en elsykkel for {{P}} kr. Innkjøpsprisen, som er den eneste variable
+      kostnaden, er {{VEK}} kr. Hva er dekningsgraden i prosent?
+    answer: { expr: DG, unit: "%", decimals: 1 }
+    steps:
+      - "DB = {{P}} − {{VEK}} = {{P - VEK}} kr"
+      - "DG = {{P - VEK}} / {{P}} · 100 = {{DG:1}} %"
+    misconceptions:
+      - expr: VEK / P * 100
+        feedback: Det er andelen variable kostnader. DG er (P − VEK) / P.
+      - expr: (P - VEK) / VEK * 100
+        feedback: Du delte på VEK. Dekningsgraden regnes av salgsprisen.
+      - expr: (P - VEK) / P
+        feedback: Riktig utregning, men svaret skal oppgis i prosent. Gang med 100.
+
+  - id: np-mcq-dg-betyr
+    type: mcq
+    prompt: Dekningsgraden er 40 %. Hva betyr det?
+    options:
+      - text: Av hver salgskrone går 40 øre til å dekke faste kostnader og overskudd
+        correct: true
+        feedback: Riktig.
+      - text: Bedriften har 40 % overskudd
+        feedback: DG sier ingenting om overskudd før de faste kostnadene er dekket.
+      - text: 40 % av kostnadene er faste
+        feedback: DG handler om forholdet mellom DB og pris, ikke om kostnadsfordelingen.
+      - text: Prisen er 40 % høyere enn VEK
+        feedback: >-
+          Det ville vært et påslag regnet av kostnaden. DG regnes av prisen: her er VEK 60 % av
+          prisen, så prisen er ca. 67 % høyere enn VEK.
+
+  - id: np-fc-npo
+    type: flashcard
+    front: Nullpunktsomsetning
+    back: FK / DG (DG som desimaltall). Omsetningen der resultatet er 0.
+
+  - id: np-num-npo
+    type: numeric
+    skillLevel: 1
+    vars:
+      FK: { min: 600000, max: 2400000, step: 50000 }
+      DGP: { choices: [20, 25, 30, 35, 40, 45, 50] }
+    derived:
+      NPO: FK / (DGP / 100)
+    prompt: >-
+      Tråkk AS har faste kostnader på {{FK}} kr per år. Dekningsgraden er {{DGP}} %.
+      Hva er nullpunktsomsetningen?
+    answer: { expr: NPO, unit: kr }
+    steps:
+      - "DG = {{DGP}} % = {{DGP / 100:2}}"
+      - "Nullpunktsomsetning = FK / DG = {{FK}} / {{DGP / 100:2}} = {{NPO}} kr"
+    misconceptions:
+      - expr: FK * DGP / 100
+        feedback: Du ganget. Nullpunktsomsetning = FK / DG.
+      - expr: FK / DGP
+        feedback: Bruk DG som desimaltall ({{DGP}} % = {{DGP / 100:2}}).
+
+  - id: np-tf-negativ-db
+    type: truefalse
+    statement: Hvis dekningsbidraget per enhet er negativt, kan bedriften nå nullpunktet ved å selge mer.
+    answer: false
+    explanation: >-
+      Med negativt DB taper bedriften penger på hver enhet den selger. Mer salg gir bare større underskudd.
+
+  - id: np-mcq-pris-opp
+    type: mcq
+    skillLevel: 2
+    prompt: Hva skjer med nullpunktsmengden hvis prisen øker og alt annet er likt?
+    options:
+      - text: Den synker
+        correct: true
+        feedback: Riktig. Høyere pris gir høyere DB per enhet, så færre enheter trengs for å dekke FK.
+      - text: Den øker
+        feedback: Høyere pris gir høyere DB per enhet. Da trengs færre enheter, ikke flere.
+      - text: Den er uendret
+        feedback: Nullpunktsmengden = FK / (P − VEK). Når P øker, blir nevneren større.
+      - text: Det kan ikke avgjøres
+        feedback: Med alt annet likt kan det avgjøres. Høyere P gir høyere DB og lavere nullpunkt.
+
+  - id: np-mcq-fk-opp
+    type: mcq
+    skillLevel: 2
+    prompt: De faste kostnadene øker med 10 %, mens pris og VEK er uendret. Hva skjer med nullpunktsmengden?
+    options:
+      - text: Den øker med 10 %
+        correct: true
+        feedback: Riktig. Nullpunktsmengden er FK / DB, så den er proporsjonal med FK.
+      - text: Den øker med mer enn 10 %
+        feedback: Nullpunktsmengden er FK / DB. Når bare FK endres, endres nullpunktet like mye.
+      - text: Den øker med mindre enn 10 %
+        feedback: Nullpunktsmengden er FK / DB. Når bare FK endres, endres nullpunktet like mye.
+      - text: Den er uendret
+        feedback: Flere faste kostnader må dekkes, så bedriften må selge mer.
+
+  - id: np-mcq-vek-opp
+    type: mcq
+    skillLevel: 2
+    prompt: Leverandøren øker prisen på kaffebønner. Hva skjer med nullpunktet til Kafé Bønna?
+    options:
+      - text: Det øker, fordi DB per kopp blir lavere
+        correct: true
+        feedback: Riktig. Høyere VEK gir lavere DB per kopp, så kafeen må selge flere kopper.
+      - text: Det synker
+        feedback: Dyrere bønner gir lavere DB per kopp. Da må kafeen selge flere kopper, ikke færre.
+      - text: Det er uendret, fordi bønner er en fast kostnad
+        feedback: Bønner er en variabel kostnad – de brukes per kopp.
+      - text: Det er uendret, fordi prisen til kunden er den samme
+        feedback: Prisen er den samme, men VEK øker. Da synker DB og nullpunktet øker.
+
+  - id: np-num-npo-fra-pris
+    type: numeric
+    skillLevel: 2
+    vars:
+      P: { min: 80, max: 160, step: 5 }
+      VEK: { min: 25, max: 60, step: 5 }
+      FK: { min: 60000, max: 180000, step: 5000 }
+    derived:
+      DB: P - VEK
+      DG: DB / P
+      NPO: FK / DG
+    prompt: >-
+      Kafé Bønna regner med at hver kunde i gjennomsnitt handler for {{P}} kr, og at de variable
+      kostnadene er {{VEK}} kr per kunde. Faste kostnader er {{FK}} kr per måned. Hvor stor
+      omsetning trenger kafeen per måned for å gå i null?
+    answer: { expr: NPO, unit: kr }
+    steps:
+      - "DB per kunde = {{P}} − {{VEK}} = {{DB}} kr"
+      - "DG = {{DB}} / {{P}} = {{DG:4}}"
+      - "Nullpunktsomsetning = {{FK}} / {{DG:4}} = {{NPO:0}} kr"
+      - "(Alternativt: nullpunktsmengde {{FK / DB:1}} kunder · {{P}} kr)"
+    misconceptions:
+      - expr: FK / DB
+        feedback: Dette er nullpunktsmengden (antall kunder). Omsetningen er mengden ganget med prisen.
+      - expr: FK / (VEK / P)
+        feedback: Du brukte andelen variable kostnader. DG = (P − VEK) / P.
+
+  - id: np-fc-sm
+    type: flashcard
+    front: Sikkerhetsmargin
+    back: >-
+      Budsjettert omsetning − nullpunktsomsetning. I prosent: delt på budsjettert omsetning.
+      Viser hvor mye salget kan falle før bedriften går i underskudd.
+
+  - id: np-num-sm
+    type: numeric
+    skillLevel: 2
+    vars:
+      X: { min: 800, max: 3000, step: 100 }
+      P: { min: 400, max: 900, step: 25 }
+      VEK: { min: 150, max: 500, step: 25 }
+      FK: { min: 100000, max: 700000, step: 10000 }
+    derived:
+      DB: P - VEK
+      X0: FK / DB
+      OMS: X * P
+      NPO: X0 * P
+      SMP: (OMS - NPO) / OMS * 100
+    constraints: ["DB >= 100", "X >= X0 * 1.1"]
+    prompt: >-
+      Lillevik Mekaniske budsjetterer med å selge {{X}} sykkelstativ for {{P}} kr per stykk.
+      Variable kostnader er {{VEK}} kr per stativ, og faste kostnader er {{FK}} kr. Hva er
+      sikkerhetsmarginen i prosent?
+    answer: { expr: SMP, unit: "%", decimals: 1 }
+    tolerance: { abs: 0.2 }
+    steps:
+      - "Budsjettert omsetning = {{X}} · {{P}} = {{OMS}} kr"
+      - "Nullpunktsmengde = {{FK}} / ({{P}} − {{VEK}}) = {{X0:2}} stativ"
+      - "Nullpunktsomsetning = {{X0:2}} · {{P}} = {{NPO:0}} kr"
+      - "Sikkerhetsmargin = ({{OMS}} − {{NPO:0}}) / {{OMS}} · 100 = {{SMP:1}} %"
+    misconceptions:
+      - expr: (OMS - NPO) / NPO * 100
+        feedback: Sikkerhetsmarginen i prosent regnes av budsjettert omsetning, ikke av nullpunktsomsetningen.
+      - expr: X0 / X * 100
+        feedback: Dette er nullpunktet som andel av budsjettet. Sikkerhetsmarginen er resten, 100 % minus dette.
+      - expr: OMS - NPO
+        feedback: Det er sikkerhetsmarginen i kroner. Del på budsjettert omsetning og gang med 100.
+    figure:
+      kind: cvp
+      price: P
+      vc: VEK
+      fc: FK
+      volume: X
+
+  - id: np-mcq-sm-betyr
+    type: mcq
+    prompt: Sikkerhetsmarginen er 25 %. Hva betyr det?
+    options:
+      - text: Salget kan falle 25 % fra budsjettet før bedriften går i underskudd
+        correct: true
+        feedback: Riktig.
+      - text: Overskuddet er 25 % av omsetningen
+        feedback: Sikkerhetsmarginen måler avstanden til nullpunktet, ikke overskuddsgraden.
+      - text: Det er 25 % sannsynlighet for underskudd
+        feedback: Sikkerhetsmarginen er ingen sannsynlighet. Den sier hvor mye salget kan falle.
+      - text: Kostnadene kan øke med 25 % uten at bedriften går i underskudd
+        feedback: Sikkerhetsmarginen gjelder fall i salget, ikke økte kostnader.
+
+  - id: np-fc-malresultat
+    type: flashcard
+    front: Mengde for ønsket resultat
+    back: (FK + ønsket resultat) / DB per enhet
+
+  - id: np-num-malresultat
+    type: numeric
+    skillLevel: 2
+    vars:
+      P: { min: 400, max: 900, step: 25 }
+      VEK: { min: 150, max: 500, step: 25 }
+      FK: { min: 200000, max: 800000, step: 10000 }
+      M: { min: 50000, max: 300000, step: 10000 }
+    derived:
+      DB: P - VEK
+      XM: (FK + M) / DB
+    constraints: ["DB >= 100"]
+    prompt: >-
+      Lillevik Mekaniske selger sykkelstativ for {{P}} kr. Variable kostnader er {{VEK}} kr per
+      stativ, og faste kostnader er {{FK}} kr. Eierne ønsker et overskudd på {{M}} kr. Hvor mange
+      stativ må selges?
+    answer: { expr: XM, unit: stk }
+    steps:
+      - "DB per stativ = {{P}} − {{VEK}} = {{DB}} kr"
+      - "Mengde = (FK + ønsket overskudd) / DB = ({{FK}} + {{M}}) / {{DB}} = {{XM:1}} stativ"
+    misconceptions:
+      - expr: FK / DB
+        feedback: Dette er nullpunktet. Dekningsbidraget må også dekke det ønskede overskuddet.
+      - expr: M / DB
+        feedback: Du har glemt de faste kostnadene. Både FK og overskuddet må dekkes.
+      - expr: (FK + M) / P
+        feedback: Del på dekningsbidraget, ikke prisen. VEK må dekkes først.
+
+  - id: np-num-pris
+    type: numeric
+    skillLevel: 2
+    vars:
+      VEK: { min: 150, max: 400, step: 25 }
+      FK: { min: 100000, max: 400000, step: 10000 }
+      X: { min: 500, max: 2000, step: 100 }
+    derived:
+      PMIN: VEK + FK / X
+    prompt: >-
+      Tråkk AS vil tilby sykkelservice. Variable kostnader er {{VEK}} kr per service, og faste
+      kostnader for verkstedet er {{FK}} kr per år. De regner med å selge {{X}} servicer i året.
+      Hvilken pris må de minst ta per service for å gå i null?
+    answer: { expr: PMIN, unit: kr }
+    steps:
+      - "I nullpunktet: (P − VEK) · x = FK"
+      - "P = VEK + FK / x = {{VEK}} + {{FK}} / {{X}} = {{PMIN}} kr"
+    misconceptions:
+      - expr: FK / X
+        feedback: Prisen må også dekke den variable kostnaden for hver service.
+      - expr: VEK
+        feedback: Med pris lik VEK blir DB null, og de faste kostnadene dekkes ikke.
+
+  - id: np-mcq-forutsetning
+    type: mcq
+    skillLevel: 2
+    tags: [kritisk]
+    prompt: >-
+      Tråkk AS regner ut at de må selge 400 sykler for å gå i null. For å selge så mange må de gi
+      store rabatter. Hvilken forutsetning i nullpunktsanalysen holder da ikke?
+    options:
+      - text: At prisen per enhet er konstant
+        correct: true
+        feedback: Riktig. Med rabatter synker prisen og DB per sykkel, så nullpunktet blir høyere enn beregnet.
+      - text: At faste kostnader er faste
+        feedback: Rabattene påvirker prisen, ikke de faste kostnadene.
+      - text: At alt som kjøpes inn, blir solgt
+        feedback: Det kan også være et problem, men rabattene bryter først og fremst forutsetningen om konstant pris.
+      - text: At kostnadene er direkte
+        feedback: Nullpunktsanalysen skiller mellom faste og variable kostnader, ikke direkte og indirekte.
+
+  - id: np-mcq-kapasitet
+    type: mcq
+    skillLevel: 2
+    tags: [kritisk]
+    prompt: >-
+      Kafé Bønna kan servere maks 4 000 kopper per måned i dagens lokale. For å selge 6 000 må
+      kafeen leie et ekstra lokale. Hva betyr det for nullpunktsanalysen?
+    options:
+      - text: De faste kostnadene øker i et sprang over 4 000 kopper, så én beregning gjelder ikke for hele området
+        correct: true
+        feedback: Riktig. Faste kostnader er bare faste innenfor en gitt kapasitet (sprangvise kostnader).
+      - text: Ingenting – faste kostnader er alltid faste
+        feedback: Faste kostnader er faste innenfor en kapasitet. Over den kommer et sprang.
+      - text: Den variable kostnaden per kopp øker
+        feedback: Det er husleien – en fast kostnad – som øker, ikke kostnaden per kopp.
+      - text: Nullpunktet synker
+        feedback: Høyere faste kostnader gir et høyere nullpunkt, ikke lavere.
+
+  - id: np-tf-dobling
+    type: truefalse
+    skillLevel: 2
+    statement: Hvis salgsmengden dobles, dobles også overskuddet (med alt annet likt).
+    answer: false
+    explanation: >-
+      Samlet DB dobles, men de faste kostnadene er de samme. Derfor øker overskuddet med mer enn
+      det dobbelte (hvis bedriften allerede hadde overskudd).
