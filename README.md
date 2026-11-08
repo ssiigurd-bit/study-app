@@ -176,12 +176,3 @@ src/
   components/ oppgavevisning, figurer, tekstformat
   pages/      Hjem, Økt, Temaer, Innstillinger
 ```
-
-## Hansketeller (`/hansker/`)
-
-En egen, frittstående mini-app for å telle hanskebruk på vakt. Ligger i `public/hansker/` og publiseres som den er (ingen byggesteg):
-
-- `index.html` – hele appen (HTML, CSS og JS i én fil)
-- `sw.js` + `manifest.webmanifest` + ikoner – gjør at den virker offline og kan legges til på hjemskjermen
-
-Åpne `<pages-adresse>/hansker/` på telefonen og velg «Legg til på Hjem-skjerm». All data lagres i `localStorage` på telefonen.

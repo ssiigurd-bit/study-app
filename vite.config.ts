@@ -33,8 +33,6 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
-        // Hanskeappen i /hansker/ har sin egen service worker og skal ikke få studieappens index.html.
-        navigateFallbackDenylist: [/\/hansker\//],
       },
     }),
   ],
